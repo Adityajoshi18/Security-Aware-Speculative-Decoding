@@ -6,6 +6,8 @@ __pycache__/
 # C extensions
 *.so
 
+changelog.docx
+
 # Distribution / packaging
 .Python
 build/
@@ -124,6 +126,7 @@ celerybeat.pid
 .env
 .venv
 env/
+codegen/
 venv/
 ENV/
 env.bak/

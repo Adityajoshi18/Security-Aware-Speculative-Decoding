@@ -78,7 +78,7 @@ class InferenceCLI:
         target_model = "meta-llama/Llama-3.2-3B-Instruct"
         target_quantize = QuantoConfig(weights="int8")  # QuantoConfig(weights="int8")  None
         
-        # Drafter model
+        # Drafter model updated
         drafter_model = "meta-llama/Llama-3.2-1B-Instruct"
         drafter_quantize = QuantoConfig(weights="int8")  # QuantoConfig(weights="int8") None
 

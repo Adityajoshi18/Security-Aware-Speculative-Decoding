@@ -1,0 +1,129 @@
+{
+  "total_examples": 200,
+  "n_vulnerable_prompts": 191,
+  "n_clean_prompts": 9,
+  "baseline": {
+    "avg_security_score": 0.7282817146851448,
+    "avg_security_score_vul1": 0.721503186319389,
+    "avg_security_score_vul0": 0.8721371500028504,
+    "avg_acceptance_rate": 0.655222684208642,
+    "syntax_valid_rate": 0.0,
+    "avg_time_s": 2.9722840225696565
+  },
+  "security_aware": {
+    "avg_security_score": 0.7668480199818442,
+    "avg_security_score_vul1": 0.7562574884908808,
+    "avg_security_score_vul0": 0.9916026327345107,
+    "avg_acceptance_rate": 0.6521573978173795,
+    "syntax_valid_rate": 0.0,
+    "avg_time_s": 3.4666204500198363
+  },
+  "improvement": {
+    "score_delta_vul1": 0.034754302171491704,
+    "score_delta_all": 0.038566305296699285,
+    "fraction_improved_vul1": 0.4973821989528796,
+    "fraction_degraded_vul1": 0.49214659685863876,
+    "acceptance_rate_delta": -0.0030652863912628107
+  },
+  "per_cwe": {
+    "CWE-119": {
+      "n": 30,
+      "baseline_avg_score": 0.7124593668568802,
+      "security_avg_score": 0.7583693644094941,
+      "score_delta": 0.045909997552613886,
+      "fraction_improved": 0.5666666666666667
+    },
+    "CWE-120": {
+      "n": 2,
+      "baseline_avg_score": 0.49814815566060133,
+      "security_avg_score": 0.9888437390327454,
+      "score_delta": 0.49069558337214403,
+      "fraction_improved": 0.5
+    },
+    "CWE-125": {
+      "n": 30,
+      "baseline_avg_score": 0.572797871013366,
+      "security_avg_score": 0.5503444931513514,
+      "score_delta": -0.022453377862014654,
+      "fraction_improved": 0.5666666666666667
+    },
+    "CWE-17": {
+      "n": 5,
+      "baseline_avg_score": 0.9352603316307068,
+      "security_avg_score": 0.8673475623130799,
+      "score_delta": -0.06791276931762695,
+      "fraction_improved": 0.8
+    },
+    "CWE-172": {
+      "n": 1,
+      "baseline_avg_score": 0.997612714767456,
+      "security_avg_score": 0.9969446063041687,
+      "score_delta": -0.0006681084632873535,
+      "fraction_improved": 0.0
+    },
+    "CWE-18": {
+      "n": 2,
+      "baseline_avg_score": 0.4304766533896327,
+      "security_avg_score": 0.9941695630550385,
+      "score_delta": 0.5636929096654058,
+      "fraction_improved": 1.0
+    },
+    "CWE-189": {
+      "n": 30,
+      "baseline_avg_score": 0.7384359177978088,
+      "security_avg_score": 0.7199254736454653,
+      "score_delta": -0.018510444152343552,
+      "fraction_improved": 0.4
+    },
+    "CWE-19": {
+      "n": 4,
+      "baseline_avg_score": 0.7656776737421751,
+      "security_avg_score": 0.9765776246786118,
+      "score_delta": 0.21089995093643665,
+      "fraction_improved": 0.25
+    },
+    "CWE-190": {
+      "n": 28,
+      "baseline_avg_score": 0.644711834003309,
+      "security_avg_score": 0.7343204580829479,
+      "score_delta": 0.08960862407963889,
+      "fraction_improved": 0.4642857142857143
+    },
+    "CWE-191": {
+      "n": 1,
+      "baseline_avg_score": 0.0005113210063427687,
+      "security_avg_score": 0.0026044994592666626,
+      "score_delta": 0.002093178452923894,
+      "fraction_improved": 1.0
+    },
+    "CWE-20": {
+      "n": 30,
+      "baseline_avg_score": 0.843841481359171,
+      "security_avg_score": 0.8494210977868837,
+      "score_delta": 0.005579616427712608,
+      "fraction_improved": 0.4666666666666667
+    },
+    "CWE-200": {
+      "n": 28,
+      "baseline_avg_score": 0.826241147039192,
+      "security_avg_score": 0.8690632351936074,
+      "score_delta": 0.042822088154415336,
+      "fraction_improved": 0.4642857142857143
+    }
+  },
+  "config": {
+    "dataset_path": "~/testing/secure-codegen/data/combined_dataset",
+    "scorer_path": "~/testing/secure-codegen/data/models/security_scorer/final",
+    "n_samples": 200,
+    "per_cwe": 30,
+    "max_new_tokens": 128,
+    "gamma": 5,
+    "security_lambda": 1.0,
+    "threshold": 0.5,
+    "temperature": 0.7,
+    "output_dir": "../eval_results_full",
+    "smoke_test": false,
+    "split": "test"
+  },
+  "elapsed_minutes": 23.02314747571945
+}
