@@ -23,10 +23,15 @@ sys.path.insert(0, '../')
 from sampling.security_scorer import SecurityScorer
 from sampling.statement_detector import StatementDetector, is_scoreable_statement
 
-# Minimum number of whitespace-separated tokens a statement must have
-# before it is sent to CodeBERT. Below this threshold the statement is
-# too short to carry reliable security signal (e.g. "int i", "int ret = 0").
-MIN_SCOREABLE_TOKENS = 5
+# Minimum number of CodeBERT subword tokens a statement must have before
+# it is sent to the scorer. Using CodeBERT's own tokenizer instead of
+# whitespace splitting means dense expressions like
+#   pCluster = (Cluster*)malloc(sizeof(Cluster))
+# correctly count as ~15 subword tokens and pass the gate, whereas the
+# old whitespace split counted them as only 3 "words" and silently dropped
+# them. Threshold of 10 subword tokens filters trivial declarations
+# ("int i", "int ret = 0") while letting real statements through.
+MIN_SCOREABLE_TOKENS = 10
 
 
 @torch.no_grad()
@@ -166,13 +171,17 @@ def security_aware_speculative_generate(
                 if debug:
                     print(f"\n[Skipped] Non-code statement filtered: '{statement[:60]}'")
 
-            # Gate 2: filter short declarations that CodeBERT can't score reliably
-            # e.g. "int i", "int ret = 0", "long long size = 0"
-            elif len(statement.split()) < MIN_SCOREABLE_TOKENS:
+            # Gate 2: filter short declarations that CodeBERT can't score reliably.
+            # Uses CodeBERT's own subword tokenizer (same tokenization used at
+            # scoring time) rather than whitespace splitting, so dense C expressions
+            # like "pCluster = (Cluster*)malloc(sizeof(Cluster))" are no longer
+            # silently dropped by a whitespace-word count of 3.
+            elif security_scorer.count_tokens(statement) < MIN_SCOREABLE_TOKENS:
                 has_statement = False
                 if debug:
+                    n_toks = security_scorer.count_tokens(statement)
                     print(f"\n[Skipped] Too short to score "
-                          f"({len(statement.split())} tokens): '{statement[:60]}'")
+                          f"({n_toks} CodeBERT tokens): '{statement[:60]}'")
 
             else:
                 security_score = security_scorer.score_code(statement)

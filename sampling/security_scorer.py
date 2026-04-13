@@ -62,6 +62,29 @@ class SecurityScorer:
         
         return security_score
     
+    def count_tokens(self, code_snippet: str) -> int:
+        """
+        Count the number of CodeBERT subword tokens in a code snippet,
+        excluding special tokens ([CLS], [SEP]).
+
+        Used as the token gate in security-aware speculative decoding —
+        replaces the old whitespace-split heuristic with the same
+        tokenization CodeBERT actually uses when scoring.
+
+        Args:
+            code_snippet: Code string to count tokens for
+
+        Returns:
+            int: Number of subword tokens (excluding [CLS] / [SEP])
+        """
+        encoding = self.tokenizer(
+            code_snippet,
+            truncation=False,
+            add_special_tokens=False,   # exclude [CLS] and [SEP]
+            return_tensors=None,
+        )
+        return len(encoding['input_ids'])
+
     def score_batch(self, code_snippets):
         """
         Score multiple code snippets at once (faster)
