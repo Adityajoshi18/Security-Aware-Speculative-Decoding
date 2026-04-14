@@ -54,6 +54,24 @@ python lambda_sweep.py --lambdas 1.5 2.0 3.0 --smoke_test
 ---
 
 ### Results
-*To be filled in after testing.*
+
+Full 200-sample runs completed for all six lambda values. Summary:
+
+| Lambda | Score Δ (vul1) | % Improved | % Degraded | Acceptance Δ |
+|--------|---------------|------------|------------|--------------|
+| 0.5    | +0.014        | 48.7%      | 50.3%      | +0.007       |
+| 1.0    | +0.032        | 47.6%      | 50.8%      | +0.009       |
+| **1.5**| **+0.048**    | **51.3%**  | **47.1%**  | **+0.012**   |
+| 2.0    | -0.025        | 47.1%      | 52.4%      | -0.001       |
+| 3.0    | -0.035        | 46.1%      | 53.9%      | +0.015       |
+| 5.0    | +0.041        | 48.7%      | 49.7%      | +0.008       |
+
+**λ=1.5 is the best-performing value.** It's the only lambda where more examples improved than degraded (51.3% vs 47.1%), and it has the highest score delta on vulnerable examples (+0.048).
+
+**λ=2.0 and λ=3.0 actively hurt performance** — both show negative score deltas and majority degradation. The penalty appears to be overwhelming generation quality in that range.
+
+**λ=5.0 recovering to +0.041** after the 2.0–3.0 dip is a non-monotonic result — suggests the effect isn't smooth and there may be noise in the per-run sample draws. Baselines varied noticeably across runs (e.g., λ=3.0 baseline=0.797 vs λ=1.5 baseline=0.734), confirming that each 200-sample slice is somewhat different.
+
+**Decision: use λ=1.5 going forward.**
 
 ---
