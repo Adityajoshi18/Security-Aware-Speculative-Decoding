@@ -167,8 +167,8 @@ else:
 
 ```bash
 # Clone the repo
-git clone git@github.com:sidpatondikar/secure-codegen.git
-cd secure-codegen
+git clone git@github.com:Adityajoshi18/Security-Aware-Speculative-Decoding.git
+cd Security-Aware-Speculative-Decoding
 
 # Create virtual environment
 python -m venv venv
